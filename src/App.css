@@ -680,7 +680,7 @@ body {
     max-width: 300px;
     margin: 0 auto;
   }
-}
+
 
 @media (max-width: 768px) {
   .player-layout-fullwidth {
@@ -708,4 +708,376 @@ body {
     width: 100%;
     text-align: center;
   }
+  html, body {
+  overflow-x: hidden;
+  width: 100%;
 }
+
+/* Container responsive */
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  width: 100%;
+}
+
+/* Header responsive */
+.header-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.logo {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.header-actions {
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* Search Section Mobile */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem 0.5rem;
+  }
+
+  .header-content {
+    padding: 0 0.5rem;
+  }
+
+  .logo {
+    font-size: 1.5rem;
+  }
+
+  .logo-icon {
+    font-size: 2rem;
+  }
+
+  .header-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .user-info {
+    order: 1;
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .settings-btn,
+  .logout-btn {
+    order: 2;
+    flex: 1;
+  }
+
+  /* Search Section */
+  .search-section {
+    margin-bottom: 2rem;
+  }
+
+  .section-title {
+    font-size: 1.8rem;
+  }
+
+  .content-type-tabs {
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .tab {
+    padding: 0.8rem 1.5rem;
+    font-size: 0.95rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .search-bar {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .search-input {
+    width: 100%;
+    padding: 1.2rem 1.5rem;
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+
+  .search-btn {
+    width: 100%;
+    padding: 1.2rem;
+  }
+
+  /* Direct Play Section */
+  .direct-play-section {
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .direct-play-section h3 {
+    font-size: 1.5rem;
+  }
+
+  .direct-play-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .direct-id-input {
+    width: 100%;
+    min-width: 100%;
+    font-size: 16px;
+  }
+
+  .episode-inputs {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .episode-input {
+    flex: 1;
+    min-width: 100px;
+    font-size: 16px;
+  }
+
+  .dub-toggle {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .play-btn {
+    width: 100%;
+  }
+
+  /* Results Grid */
+  .results-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 1rem;
+  }
+
+  .result-poster {
+    height: 210px;
+  }
+
+  .result-info h4 {
+    font-size: 0.85rem;
+  }
+}
+
+/* ===== VIDEO PLAYER MOBILE FIXES ===== */
+
+/* Player Controls - Mobile Fix */
+.player-controls {
+  display: flex;
+  gap: 0.8rem;
+  margin-bottom: 1.5rem;
+  align-items: center;
+  padding: 1.2rem;
+  background: rgba(59, 130, 246, 0.1);
+  border-radius: 12px;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  flex-wrap: wrap;
+}
+
+.control-input {
+  width: 100px;
+  padding: 0.8rem;
+  font-size: 16px; /* Prevents zoom on iOS */
+  border: 2px solid rgba(59, 130, 246, 0.3);
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.3);
+  color: #fff;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.update-btn {
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .back-btn {
+    margin-left: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+  }
+
+  .player-layout-fullwidth {
+    padding: 0 0.5rem 1rem;
+  }
+
+  .player-controls {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 1rem;
+    gap: 0.8rem;
+  }
+
+  .control-input {
+    width: 100%;
+    padding: 1rem;
+  }
+
+  .update-btn {
+    width: 100%;
+    padding: 1rem;
+  }
+
+  .dub-toggle {
+    width: 100%;
+    justify-content: center;
+    padding: 1rem;
+  }
+
+  /* Video wrapper stays 16:9 ratio */
+  .video-wrapper-large {
+    border-radius: 8px;
+  }
+
+  /* Media Info Below */
+  .media-info-below {
+    padding: 1.5rem;
+  }
+
+  .info-row {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .info-poster {
+    max-width: 200px;
+    margin: 0 auto;
+  }
+
+  .info-right h2 {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+
+  .info-meta {
+    justify-content: center;
+  }
+
+  .info-overview {
+    margin-bottom: 1.5rem;
+  }
+
+  .info-overview h3 {
+    font-size: 1.1rem;
+  }
+
+  .info-overview p {
+    font-size: 0.9rem;
+  }
+
+  .info-actions {
+    flex-direction: column;
+  }
+
+  .link-btn,
+  .report-btn {
+    width: 100%;
+    text-align: center;
+    padding: 1rem;
+  }
+}
+
+/* Extra Small Devices */
+@media (max-width: 480px) {
+  .header-content {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .logo {
+    text-align: center;
+    font-size: 1.3rem;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+  }
+
+  .results-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .control-input {
+    font-size: 16px;
+  }
+}
+
+/* Landscape Mobile Fix */
+@media (max-width: 768px) and (orientation: landscape) {
+  .video-wrapper-large {
+    padding-bottom: 75%; /* Adjust ratio for landscape */
+  }
+}
+
+/* Touch-friendly buttons */
+@media (hover: none) and (pointer: coarse) {
+  .tab,
+  .search-btn,
+  .play-btn,
+  .result-card,
+  .update-btn,
+  .link-btn,
+  .report-btn,
+  .back-btn {
+    -webkit-tap-highlight-color: rgba(229, 9, 20, 0.2);
+    touch-action: manipulation;
+  }
+
+  .result-card {
+    transition: transform 0.2s;
+  }
+
+  .result-card:active {
+    transform: scale(0.98);
+  }
+}
+
+/* Prevent text selection on double tap */
+.tab,
+.search-btn,
+.play-btn,
+.update-btn,
+.link-btn,
+.report-btn {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* iOS Safari fixes */
+@supports (-webkit-touch-callout: none) {
+  .search-input,
+  .direct-id-input,
+  .episode-input,
+  .control-input {
+    font-size: 16px !important; /* Prevents zoom */
+  }
+
+}
+}}
