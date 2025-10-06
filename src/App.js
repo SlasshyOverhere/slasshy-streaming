@@ -18,6 +18,7 @@ function App() {
   const [directId, setDirectId] = useState('');
   const [isDub, setIsDub] = useState(false);
   const [showUnavailableDialog, setShowUnavailableDialog] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const [appLoading, setAppLoading] = useState(true);
 
@@ -289,7 +290,7 @@ function App() {
             <span className="logo-icon">🎬</span>
             Slasshy
           </a>
-          <div className="header-actions">
+          <div className={`header-actions ${isMenuOpen ? 'active' : ''}`}>
             <div className="user-info">
               <img src={user.picture} alt={user.name} className="user-avatar" />
               <span className="user-name">{user.name}</span>
@@ -301,6 +302,11 @@ function App() {
               Logout
             </button>
           </div>
+          <button className="hamburger" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+            <span className="hamburger-box">
+              <span className="hamburger-inner"></span>
+            </span>
+          </button>
         </div>
       </header>
 
