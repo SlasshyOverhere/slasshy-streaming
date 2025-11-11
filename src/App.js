@@ -76,18 +76,24 @@ function App() {
 
         setSearchResults(animeResults);
       } else {
-        const apiKey = process.env.REACT_APP_TMDB_API_KEY;
-        console.log('API Key check:', apiKey ? 'Found' : 'Not found');
-        if (!apiKey) {
-          alert('TMDB API key not configured. Please add REACT_APP_TMDB_API_KEY to your .env file');
+        // Use backend API to proxy TMDB requests (keeps API key secure)
+        const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:3001';
+        const searchUrl = `${apiUrl}/api/search/${contentType}?query=${encodeURIComponent(searchQuery)}&page=1`;
+        
+        try {
+          const response = await axios.get(searchUrl);
+          setSearchResults(response.data.results || []);
+        } catch (apiError) {
+          if (apiError.response?.status === 404 || apiError.code === 'ECONNREFUSED') {
+            alert('Backend API is not running. Please start the API server (see api/README.md for instructions).');
+          } else if (apiError.response?.data?.error) {
+            alert(`Search failed: ${apiError.response.data.error}`);
+          } else {
+            throw apiError; // Re-throw to be caught by outer catch
+          }
           setSearching(false);
           return;
         }
-        
-        const searchUrl = `https://api.themoviedb.org/3/search/${contentType}?api_key=${apiKey}&query=${encodeURIComponent(searchQuery)}&page=1`;
-        
-        const response = await axios.get(searchUrl);
-        setSearchResults(response.data.results || []);
       }
       
       setSearching(false);

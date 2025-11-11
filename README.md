@@ -1,3 +1,72 @@
+# Slasshy Streaming
+
+A streaming application that allows users to search and watch movies, TV shows, and anime.
+
+## Setup
+
+### Backend API (Required)
+
+The backend API is required to keep the TMDB API key secure. 
+
+1. Navigate to the `api` folder:
+```bash
+cd api
+```
+
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Create a `.env` file in the `api` folder:
+```env
+TMDB_API_KEY=your_tmdb_api_key_here
+PORT=3001
+```
+
+   Get your TMDB API key from: https://www.themoviedb.org/settings/api
+
+4. Start the backend server:
+```bash
+npm start
+```
+
+   The server will run on `http://localhost:3001` by default.
+
+   For development with auto-reload:
+```bash
+npm run dev
+```
+
+See `api/README.md` for more details about the backend API.
+
+### Frontend
+
+1. Install dependencies (from the root directory):
+```bash
+npm install
+```
+
+2. Start the React app:
+```bash
+npm start
+```
+
+   The app will run on `http://localhost:3715` (or check the console for the actual port).
+
+3. (Optional) If your backend API is running on a different URL, create a `.env` file in the root directory:
+```env
+REACT_APP_API_URL=http://localhost:3001
+```
+
+## Important Notes
+
+- **The backend API must be running** for movie and TV show searches to work.
+- The TMDB API key is stored securely on the backend and never exposed to the client.
+- Anime searches use Anilist API and don't require the backend.
+
+---
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
