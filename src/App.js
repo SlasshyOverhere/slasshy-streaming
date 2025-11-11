@@ -6,8 +6,6 @@ import axios from 'axios';
 function App() {
   const { loginWithRedirect, logout, user, isAuthenticated, isLoading } = useAuth0();
   
-  const [apiKey, setApiKey] = useState('');
-  const [showApiKeyDialog, setShowApiKeyDialog] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [contentType, setContentType] = useState('movie');
   const [searchResults, setSearchResults] = useState([]);
@@ -28,35 +26,9 @@ function App() {
     }
   }, [isLoading]);
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      const savedKey = localStorage.getItem('tmdb_api_key');
-      if (savedKey) {
-        setApiKey(savedKey);
-      } else {
-        setShowApiKeyDialog(true);
-      }
-    }
-  }, [isAuthenticated]);
-
-  const saveApiKey = () => {
-    if (!apiKey.trim()) {
-      alert('Please enter a valid API key');
-      return;
-    }
-    localStorage.setItem('tmdb_api_key', apiKey.trim());
-    setShowApiKeyDialog(false);
-  };
-
   const handleSearch = async () => {
     if (!searchQuery.trim()) {
       alert('Please enter a search term');
-      return;
-    }
-
-    if (!apiKey) {
-      alert('Please add TMDB API key first');
-      setShowApiKeyDialog(true);
       return;
     }
 
@@ -64,7 +36,6 @@ function App() {
     setSearchResults([]);
 
     try {
-      let searchUrl = '';
       if (contentType === 'anime') {
         const query = `
           query ($search: String) {
@@ -105,7 +76,15 @@ function App() {
 
         setSearchResults(animeResults);
       } else {
-        searchUrl = `https://api.themoviedb.org/3/search/${contentType}?api_key=${apiKey}&query=${encodeURIComponent(searchQuery)}&page=1`;
+        const apiKey = process.env.REACT_APP_TMDB_API_KEY;
+        console.log('API Key check:', apiKey ? 'Found' : 'Not found');
+        if (!apiKey) {
+          alert('TMDB API key not configured. Please add REACT_APP_TMDB_API_KEY to your .env file');
+          setSearching(false);
+          return;
+        }
+        
+        const searchUrl = `https://api.themoviedb.org/3/search/${contentType}?api_key=${apiKey}&query=${encodeURIComponent(searchQuery)}&page=1`;
         
         const response = await axios.get(searchUrl);
         setSearchResults(response.data.results || []);
@@ -114,7 +93,7 @@ function App() {
       setSearching(false);
     } catch (error) {
       console.error('Search error:', error);
-      alert('Search failed. Please check your API key.');
+      alert('Search failed. Please try again.');
       setSearching(false);
     }
   };
@@ -251,26 +230,6 @@ function App() {
   // Main App
   return (
     <div className="app">
-      {showApiKeyDialog && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <h2>🔑 Enter TMDB API Key</h2>
-            <p>Get your free API key from <a href="https://www.themoviedb.org/settings/api" target="_blank" rel="noopener noreferrer">TMDB</a></p>
-            <input
-              type="text"
-              placeholder="Enter your TMDB API Key"
-              value={apiKey}
-              onChange={(e) => setApiKey(e.target.value)}
-              className="api-key-input"
-              onKeyPress={(e) => e.key === 'Enter' && saveApiKey()}
-            />
-            <button onClick={saveApiKey} className="btn btn-primary" style={{ width: '100%' }}>
-              💾 Save & Continue
-            </button>
-          </div>
-        </div>
-      )}
-
       {showUnavailableDialog && (
         <div className="modal-overlay">
           <div className="modal-content unavailable-dialog">
@@ -295,9 +254,6 @@ function App() {
               <img src={user.picture} alt={user.name} className="user-avatar" />
               <span className="user-name">{user.name}</span>
             </div>
-            <button onClick={() => setShowApiKeyDialog(true)} className="btn btn-secondary">
-              API Key
-            </button>
             <button onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })} className="btn btn-secondary">
               Logout
             </button>
