@@ -245,10 +245,10 @@ function App() {
 
       <header className="header">
         <div className="header-content">
-          <a href="#" onClick={() => setSelectedMedia(null)} className="logo">
+          <button onClick={() => setSelectedMedia(null)} className="logo" style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, font: 'inherit' }}>
             <span className="logo-icon">🎬</span>
             Slasshy
-          </a>
+          </button>
           <div className={`header-actions ${isMenuOpen ? 'active' : ''}`}>
             <div className="user-info">
               <img src={user.picture} alt={user.name} className="user-avatar" />
