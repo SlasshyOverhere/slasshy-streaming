@@ -19,6 +19,9 @@ export default defineConfig(({ mode }) => {
           API_KEY: env.GEMINI_API_KEY
         })
       },
+      build: {
+        outDir: 'build', // Change output directory to 'build' for Vercel compatibility
+      },
       resolve: {
         alias: {
           '@': path.resolve(__dirname, '.'),
