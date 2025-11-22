@@ -6,6 +6,8 @@ import { Button } from './ui/Button';
 import { StarsBackground } from './ui/StarsBackground';
 import { ShootingStars } from './ui/ShootingStars';
 import { SlideTabs } from './ui/slide-tabs';
+import { HeroPill, StarIcon } from './ui/HeroPill';
+import { useNotification } from '../hooks/useNotification';
 import {
   Clapperboard,
   LogOut,
@@ -45,10 +47,22 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
   const [detailedMedia, setDetailedMedia] = useState<any>(null);
   const [isDetailedViewOpen, setIsDetailedViewOpen] = useState(false);
   const [isFetchingDetails, setIsFetchingDetails] = useState(false);
+  const [showNotificationPopup, setShowNotificationPopup] = useState(false);
+
+  // Get notification configuration
+  const notification = useNotification();
 
   useEffect(() => {
+    // Show notification popup on initial load if notification exists
+    if (notification && notification.text) {
+      // Use a slight delay to ensure UI is fully loaded before showing the popup
+      const timer = setTimeout(() => {
+        setShowNotificationPopup(true);
+      }, 500);
+      return () => clearTimeout(timer);
+    }
     setRecommendations([]);
-  }, [activeTab]);
+  }, [notification]);
 
   const handleAiSearch = async () => {
     if (!searchQuery.trim()) return;
@@ -576,6 +590,46 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
                 </Button>
               </div>
             )}
+          </div>
+        </div>
+      )}
+
+      {/* Centered Notification Popup */}
+      {showNotificationPopup && notification && notification.text && (
+        <div className="fixed inset-0 z-[101] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
+          <div className="relative w-full max-w-md bg-neutral-900 border border-white/20 rounded-2xl shadow-2xl p-6 transform transition-all">
+            <div className="flex justify-between items-start mb-4">
+              <div className="flex items-center">
+                <div className="bg-red-500 rounded-full p-2 mr-3 flex items-center justify-center">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="white"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-white">Notification</h3>
+              </div>
+              <button
+                onClick={() => setShowNotificationPopup(false)}
+                className="text-neutral-400 hover:text-white rounded-full p-1"
+                aria-label="Close notification"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+            <p className="text-neutral-300 mb-6">{notification.text}</p>
+            <div className="flex justify-end">
+              <button
+                onClick={() => setShowNotificationPopup(false)}
+                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+              >
+                Close
+              </button>
+            </div>
           </div>
         </div>
       )}
