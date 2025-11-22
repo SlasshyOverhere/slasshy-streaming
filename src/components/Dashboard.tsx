@@ -132,7 +132,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
   const viewModeIndex = viewMode === 'Discovery' ? 0 : 1;
 
   return (
-    <div className="relative h-screen w-full bg-neutral-950 text-white overflow-hidden selection:bg-red-500/30 flex flex-col">
+    <div className="relative min-h-screen w-full bg-neutral-950 text-white overflow-hidden selection:bg-red-500/30 flex flex-col">
 
       {/* 3D Background Effects */}
       <div className="fixed inset-0 z-0 opacity-70 pointer-events-none">
@@ -145,7 +145,14 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
 
       {/* Fixed Navbar */}
       <nav className="relative z-50 mx-auto w-full max-w-7xl px-6 pt-6">
-        <div className="flex h-16 items-center justify-between rounded-full border border-white/10 bg-black/60 px-6 shadow-[0_0_20px_-5px_rgba(0,0,0,0.5)] backdrop-blur-md">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-0 h-auto sm:h-16 items-center justify-between rounded-full border border-white/10 bg-black/60 px-4 sm:px-6 py-2 sm:py-0 shadow-[0_0_20px_-5px_rgba(0,0,0,0.5)] backdrop-blur-md">
+          {/* Mobile notification banner */}
+          <div className="sm:hidden bg-yellow-900/20 border border-yellow-800/30 rounded-lg p-2 mb-2">
+            <p className="text-xs text-yellow-200 text-center">
+              <span className="font-medium">Mobile users:</span> Enable "Desktop Site" for better experience
+            </p>
+          </div>
+
           <div className="flex items-center gap-3">
             <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-red-600 shadow-red-500/20 shadow-lg">
               <Clapperboard className="h-5 w-5 text-white" />
@@ -179,7 +186,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
         </div>
 
         {/* Mobile View Switcher */}
-        <div className="mt-4 flex justify-center md:hidden">
+        <div className="mt-2 flex justify-center md:hidden px-4">
            <SlideTabs
               tabs={["TMDB Discovery", "Console"]}
               activeTab={viewModeIndex}
@@ -189,7 +196,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
       </nav>
 
       {/* Main Content Area - No global scrollbar, internal scrolling if needed */}
-      <main className="flex-1 relative z-10 w-full overflow-hidden flex flex-col">
+      <main className="flex-1 relative z-10 w-full overflow-x-hidden flex flex-col">
 
         {/* AI DISCOVERY VIEW */}
         <div className={`absolute inset-0 transition-all duration-500 ease-in-out ${viewMode === 'Discovery' ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10 pointer-events-none'}`}>
@@ -247,12 +254,12 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
               {/* Results Area - Scrollable */}
               <div className="w-full max-w-6xl flex-1 overflow-y-auto px-4 no-scrollbar pb-24">
                 {recommendations.length === 0 ? (
-                   <div className="h-full flex flex-col items-center justify-center text-center text-neutral-500 opacity-60">
+                   <div className="min-h-[30vh] flex flex-col items-center justify-center text-center text-neutral-500 opacity-60">
                       <Sparkles className="h-12 w-12 mb-4 text-neutral-700" />
                       <p>Enter a search query to discover content.</p>
                    </div>
                 ) : (
-                  <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 pb-8">
+                  <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 pb-8">
                     {recommendations.map((rec, idx) => (
                       <div
                         key={rec.fakeId}
@@ -275,14 +282,14 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
                             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
                           </div>
                         )}
-                        <div className="p-5 flex-1">
-                          <div className="flex items-center justify-between mb-3">
-                             <h4 className="text-lg font-bold text-white line-clamp-1 mr-2">{rec.title}</h4>
+                        <div className="p-4 sm:p-5 flex-1">
+                          <div className="flex items-center justify-between mb-2 sm:mb-3">
+                             <h4 className="text-base sm:text-lg font-bold text-white line-clamp-1 mr-2">{rec.title}</h4>
                              <span className="shrink-0 rounded-md border border-white/10 bg-white/5 px-2 py-0.5 text-[10px] font-medium text-neutral-400">
                                {rec.year}
                              </span>
                           </div>
-                          <p className="text-sm text-neutral-400 mb-3 line-clamp-2">{rec.description}</p>
+                          <p className="text-xs sm:text-sm text-neutral-400 mb-2 sm:mb-3 line-clamp-2">{rec.description}</p>
                           {rec.reason && rec.reason.trim() !== '' && (
                             <div className="relative rounded-lg bg-black/30 p-2 border border-white/5">
                               <div className="absolute top-0 left-0 w-0.5 h-full bg-red-600 rounded-l-lg opacity-50" />
@@ -290,7 +297,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
                             </div>
                           )}
                         </div>
-                        <div className="px-5 py-3 bg-black/20 border-t border-white/5">
+                        <div className="px-4 sm:px-5 py-2 sm:py-3 bg-black/20 border-t border-white/5">
                           <div className="flex w-full items-center justify-between text-xs font-medium text-neutral-400 group-hover:text-red-500 transition-colors">
                             <span>Use ID {rec.fakeId}</span>
                             <ChevronRight className="h-3 w-3" />
@@ -306,11 +313,11 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
 
         {/* DEVELOPER CONSOLE VIEW */}
         <div className={`absolute inset-0 transition-all duration-500 ease-in-out flex items-center justify-center ${viewMode === 'Console' ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10 pointer-events-none'}`}>
-           <div className="w-full max-w-2xl px-6">
+           <div className="w-full max-w-2xl px-4">
               <div className="relative overflow-hidden rounded-[2rem] border border-neutral-800 bg-neutral-900/30 p-1 backdrop-blur-2xl shadow-2xl">
                 <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent opacity-50 pointer-events-none" />
 
-                <div className="relative rounded-[1.8rem] border border-white/5 bg-black/60 p-8 md:p-10">
+                <div className="relative rounded-[1.8rem] border border-white/5 bg-black/60 p-4 sm:p-6 md:p-10">
                   <div className="flex items-center justify-between mb-8">
                       <div>
                         <h2 className="text-2xl font-bold text-white mb-1">Developer Console</h2>
@@ -337,20 +344,20 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
                               placeholder="e.g., 550"
                               value={tmdbId}
                               onChange={(e) => setTmdbId(e.target.value)}
-                              className="w-full rounded-xl border border-neutral-800 bg-neutral-900/50 py-3 pl-12 pr-4 text-lg text-white placeholder:text-neutral-700 focus:border-red-500 focus:bg-neutral-900 focus:ring-1 focus:ring-red-500 focus:outline-none transition-all font-mono"
+                              className="w-full rounded-xl border border-neutral-800 bg-neutral-900/50 py-3 pl-12 pr-4 text-base sm:text-lg text-white placeholder:text-neutral-700 focus:border-red-500 focus:bg-neutral-900 focus:ring-1 focus:ring-red-500 focus:outline-none transition-all font-mono"
                             />
                         </div>
                       </div>
 
                       {activeTab !== 'movies' && (
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                           <div>
                             <label className="mb-2 block text-xs font-medium text-neutral-500 uppercase tracking-wider">Season</label>
                             <input
                               type="number"
                               value={season}
                               onChange={(e) => setSeason(e.target.value)}
-                              className="w-full rounded-xl border border-neutral-800 bg-neutral-900/50 py-3 px-4 text-center text-lg text-white focus:border-red-500 focus:bg-neutral-900 focus:ring-1 focus:ring-red-500 focus:outline-none transition-all font-mono"
+                              className="w-full rounded-xl border border-neutral-800 bg-neutral-900/50 py-3 px-4 text-center text-base sm:text-lg text-white focus:border-red-500 focus:bg-neutral-900 focus:ring-1 focus:ring-red-500 focus:outline-none transition-all font-mono"
                             />
                           </div>
                           <div>
@@ -359,7 +366,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
                               type="number"
                               value={episode}
                               onChange={(e) => setEpisode(e.target.value)}
-                              className="w-full rounded-xl border border-neutral-800 bg-neutral-900/50 py-3 px-4 text-center text-lg text-white focus:border-red-500 focus:bg-neutral-900 focus:ring-1 focus:ring-red-500 focus:outline-none transition-all font-mono"
+                              className="w-full rounded-xl border border-neutral-800 bg-neutral-900/50 py-3 px-4 text-center text-base sm:text-lg text-white focus:border-red-500 focus:bg-neutral-900 focus:ring-1 focus:ring-red-500 focus:outline-none transition-all font-mono"
                             />
                           </div>
                         </div>
@@ -368,7 +375,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
                       <Button
                         onClick={handlePlay}
                         variant="shimmer"
-                        className="w-full h-12 rounded-xl text-base font-bold mt-2"
+                        className="w-full h-12 rounded-xl text-base font-bold mt-2 min-h-[48px]"
                       >
                         Initialize Stream
                       </Button>
@@ -382,7 +389,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
 
       {/* Video Player Modal */}
       {playbackState !== PlaybackState.IDLE && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-3xl p-4 animate-fade-in-up">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-3xl p-2 animate-fade-in-up">
            <div className="relative w-full max-w-6xl aspect-video bg-black rounded-2xl border border-neutral-800 overflow-hidden shadow-2xl ring-1 ring-white/10">
               <button
                 className="absolute top-4 right-4 z-50 flex h-8 w-8 items-center justify-center rounded-full bg-black/50 text-white backdrop-blur-md hover:bg-red-600 transition-colors border border-white/10"
@@ -444,7 +451,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
 
       {/* Detailed Media Modal */}
       {isDetailedViewOpen && (
-        <div className="fixed inset-0 z-[99] flex items-center justify-center bg-black/80 backdrop-blur-md p-4">
+        <div className="fixed inset-0 z-[99] flex items-center justify-center bg-black/80 backdrop-blur-md p-2">
           <div className="relative w-full max-w-7xl max-h-[95vh] overflow-hidden bg-gradient-to-br from-neutral-900 to-black rounded-3xl border border-white/20 shadow-2xl shadow-black/50">
             {isFetchingDetails ? (
               <div className="flex items-center justify-center h-96">
@@ -472,21 +479,21 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
                 </div>
 
                 {/* Content scrollable area with hidden scrollbar */}
-                <div className="overflow-y-auto h-[calc(95vh-20rem)] scrollbar-hide">
-                  <div className="p-8 pt-8">
-                    <div className="flex items-start gap-8">
+                <div className="overflow-y-auto max-h-[calc(95vh-20rem)] scrollbar-hide">
+                  <div className="p-4 sm:p-8 pt-8">
+                    <div className="flex flex-col sm:flex-row items-start gap-4 sm:gap-8">
                       {detailedMedia.poster_path && (
                         <img
                           src={`https://image.tmdb.org/t/p/w500${detailedMedia.poster_path}`}
                           alt={detailedMedia.title || detailedMedia.name}
-                          className="w-52 h-72 object-cover rounded-2xl border-4 border-white/20 shadow-2xl shadow-black/50 sticky top-8"
+                          className="w-full sm:w-52 h-80 sm:h-72 object-cover rounded-2xl border-4 border-white/20 shadow-2xl shadow-black/50 self-start"
                         />
                       )}
-                      <div className="flex-1">
-                        <h2 className="text-4xl font-bold text-white mb-3">
+                      <div className="flex-1 w-full">
+                        <h2 className="text-2xl sm:text-4xl font-bold text-white mb-3">
                           {detailedMedia.title || detailedMedia.name}
                         </h2>
-                        <div className="flex flex-wrap items-center gap-4 text-neutral-300 text-sm mb-5">
+                        <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-neutral-300 text-sm mb-3 sm:mb-5">
                           <span className="px-3 py-1 bg-white/10 rounded-full">{detailedMedia.release_date ? new Date(detailedMedia.release_date).getFullYear() : detailedMedia.first_air_date ? new Date(detailedMedia.first_air_date).getFullYear() : 'N/A'}</span>
                           <span>
                             {detailedMedia.runtime
@@ -512,10 +519,10 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
                             </span>
                           ))}
                         </div>
-                        <div className="flex gap-4">
+                        <div className="flex flex-col sm:flex-row gap-4 mt-4">
                           <Button
                             onClick={playMediaFromDetails}
-                            className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white rounded-full px-8 py-4 font-bold text-lg shadow-lg shadow-red-500/20"
+                            className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white rounded-full px-8 py-4 font-bold text-lg shadow-lg shadow-red-500/20 min-h-[56px]"
                           >
                             <Play className="h-6 w-6 mr-2" />
                             Play Now
@@ -531,21 +538,21 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
                           <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
                             <span>👥</span> Cast
                           </h3>
-                          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-6">
+                          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
                             {detailedMedia.credits.cast.slice(0, 12).map((person: any, index: number) => (
                               <div key={index} className="text-center">
                                 {person.profile_path ? (
                                   <img
                                     src={`https://image.tmdb.org/t/p/w300${person.profile_path}`}
                                     alt={person.name}
-                                    className="w-24 h-24 rounded-full mx-auto object-cover border-2 border-white/20 shadow-lg"
+                                    className="w-20 h-20 rounded-full mx-auto object-cover border-2 border-white/20 shadow-lg"
                                   />
                                 ) : (
-                                  <div className="w-24 h-24 rounded-full mx-auto bg-gradient-to-br from-neutral-800 to-neutral-900 flex items-center justify-center border-2 border-white/20">
+                                  <div className="w-20 h-20 rounded-full mx-auto bg-gradient-to-br from-neutral-800 to-neutral-900 flex items-center justify-center border-2 border-white/20">
                                     <span className="text-xs text-neutral-500">No Image</span>
                                   </div>
                                 )}
-                                <p className="text-white font-medium mt-3 text-sm truncate">{person.name}</p>
+                                <p className="text-white font-medium mt-2 text-xs truncate">{person.name}</p>
                                 <p className="text-neutral-400 text-xs mt-1 truncate">{person.character}</p>
                               </div>
                             ))}

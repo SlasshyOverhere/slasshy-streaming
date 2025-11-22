@@ -23,8 +23,8 @@ const App: React.FC = () => {
 
   if (isLoading && !loadingTimeout) {
     return (
-      <div className="flex h-screen items-center justify-center bg-neutral-950">
-        <div className="text-center">
+      <div className="flex min-h-screen items-center justify-center bg-neutral-950">
+        <div className="text-center px-4">
           <div className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-red-500 border-t-transparent"></div>
           <p className="mt-4 text-white text-lg">Verifying authentication...</p>
           <p className="text-neutral-400 text-sm mt-2">This may take a few moments</p>

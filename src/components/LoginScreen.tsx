@@ -10,7 +10,7 @@ interface LoginScreenProps {
 
 export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
   return (
-    <div className="relative flex h-screen w-full flex-col items-center justify-center overflow-hidden bg-neutral-950 antialiased selection:bg-red-500/30">
+    <div className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-neutral-950 antialiased selection:bg-red-500/30">
       
       {/* Background Effects */}
       <div className="fixed inset-0 z-0">
@@ -23,40 +23,40 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
 
       {/* Content Overlay */}
       <div className="z-10 flex w-full flex-col items-center justify-center px-4 animate-float">
-        <div className="relative w-full max-w-lg rounded-3xl border border-white/10 bg-black/60 p-8 shadow-[0_0_50px_-12px_rgba(0,0,0,0.8)] backdrop-blur-2xl md:p-12 ring-1 ring-white/5">
+        <div className="relative w-full max-w-lg rounded-3xl border border-white/10 bg-black/60 p-4 sm:p-8 shadow-[0_0_50px_-12px_rgba(0,0,0,0.8)] backdrop-blur-2xl md:p-12 ring-1 ring-white/5">
           
           {/* Header */}
-          <div className="mb-10 text-center">
-            <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-red-600 to-red-800 shadow-[0_0_40px_-10px_rgba(220,38,38,0.6)]">
-              <Clapperboard className="h-8 w-8 text-white" />
+          <div className="mb-8 text-center">
+            <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-red-600 to-red-800 shadow-[0_0_40px_-10px_rgba(220,38,38,0.6)]">
+              <Clapperboard className="h-6 w-6 text-white" />
             </div>
-            <h1 className="mb-2 bg-gradient-to-b from-white to-neutral-400 bg-clip-text text-4xl font-bold tracking-tight text-transparent">
+            <h1 className="mb-2 bg-gradient-to-b from-white to-neutral-400 bg-clip-text text-2xl sm:text-4xl font-bold tracking-tight text-transparent">
               Slasshy Streaming
             </h1>
-            <p className="text-base text-neutral-300">
+            <p className="text-sm sm:text-base text-neutral-300">
               The next-generation entertainment dashboard.
             </p>
           </div>
 
           {/* Action */}
-          <div className="space-y-6">
-            <div className="group relative overflow-hidden rounded-xl border border-white/10 bg-white/5 p-4 transition-colors hover:bg-white/10">
-               <div className="flex items-center gap-4">
-                 <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-neutral-900">
-                    <Lock className="h-5 w-5 text-neutral-400" />
+          <div className="space-y-4">
+            <div className="group relative overflow-hidden rounded-xl border border-white/10 bg-white/5 p-3 sm:p-4 transition-colors hover:bg-white/10">
+               <div className="flex items-center gap-3 sm:gap-4">
+                 <div className="flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-lg bg-neutral-900">
+                    <Lock className="h-4 w-4 sm:h-5 sm:w-5 text-neutral-400" />
                  </div>
                  <div>
                    <h3 className="text-sm font-medium text-white">Secure Gateway</h3>
-                   <p className="text-xs text-neutral-400">Powered by Auth0 authentication</p>
+                   <p className="text-xs sm:text-xs text-neutral-400">Powered by Auth0 authentication</p>
                  </div>
                </div>
             </div>
 
-            <Button 
-              onClick={onLogin} 
-              variant="shimmer" 
-              size="lg" 
-              className="w-full text-base font-semibold shadow-[0_0_20px_rgba(220,38,38,0.4)]"
+            <Button
+              onClick={onLogin}
+              variant="shimmer"
+              size="lg"
+              className="w-full text-base font-semibold shadow-[0_0_20px_rgba(220,38,38,0.4)] min-h-[52px]"
             >
               Enter Platform
               <ArrowRight className="ml-2 h-4 w-4" />
@@ -64,10 +64,15 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
           </div>
           
           {/* Footer */}
-          <div className="mt-8 text-center">
-             <p className="text-xs font-medium text-neutral-500">
+          <div className="mt-4 text-center space-y-2">
+             <p className="text-xs font-medium text-neutral-500 px-2">
                By entering, you agree to our Terms of Service.
              </p>
+             <div className="bg-yellow-900/20 border border-yellow-800/30 rounded-lg p-3">
+               <p className="text-xs text-yellow-200">
+                 <span className="font-medium">Mobile users:</span> Enable "Desktop Site" in browser settings for better experience
+               </p>
+             </div>
           </div>
         </div>
       </div>

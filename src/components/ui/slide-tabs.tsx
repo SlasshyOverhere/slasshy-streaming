@@ -104,7 +104,7 @@ const Tab = React.forwardRef<HTMLLIElement, TabProps>(({ children, setPosition, 
         });
       }}
       // Fixed colors: Text should be white to invert to black when over the white cursor (mix-blend-difference)
-      className="relative z-10 block cursor-pointer px-4 py-2 text-sm font-medium uppercase text-white mix-blend-difference transition-colors md:px-6 md:py-2.5 md:text-sm"
+      className="relative z-10 block cursor-pointer px-3 py-3 sm:px-4 sm:py-2 text-sm font-medium uppercase text-white mix-blend-difference transition-colors md:px-6 md:py-2.5 md:text-sm min-h-[52px]"
     >
       {children}
     </li>
